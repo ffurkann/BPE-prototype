@@ -3,8 +3,8 @@ import json
 
 
 sentence=input("Enter a sentence:")
-
 word_list=sentence.strip().lower().split()
+
 
 for i in range(len(word_list)):
     for j in word_list[i]:
@@ -18,6 +18,7 @@ try:
     with open ("corpus.json") as f:
         corpus=json.load(f)
 
+
 except (FileNotFoundError, json.JSONDecodeError):
     corpus=[]
 
@@ -25,6 +26,7 @@ except (FileNotFoundError, json.JSONDecodeError):
 try:
     with open ("Merge_history.json") as f:
         Merge_history=json.load(f)
+
 
 except (FileNotFoundError, json.JSONDecodeError):
     Merge_history=[]
@@ -34,6 +36,7 @@ try:
     with open ("Vocab.json") as f:
         Vocab=json.load(f)
 
+
 except (FileNotFoundError, json.JSONDecodeError):
     Vocab={}
 
@@ -41,6 +44,7 @@ except (FileNotFoundError, json.JSONDecodeError):
 for i in word_list:
     corpus.append(list(i))
     corpus[-1].append("</w>")
+
 
 def pair_count(corpus):
     pair_dict = {}
@@ -54,6 +58,7 @@ def pair_count(corpus):
                     pair_dict[pair]=1
     return pair_dict
 
+
 def merger(pairs,corpus):
     most_frequent=max(pairs, key=pairs.get)
     merged_corpus=[]
@@ -66,6 +71,7 @@ def merger(pairs,corpus):
         merged_corpus.append(merged)
     merged_pair=most_frequent
     return merged_corpus,merged_pair
+
 
 def vocab_create(corpus,Vocab):
     id_counter=0
@@ -89,17 +95,11 @@ while True:
 Vocab=vocab_create(corpus,Vocab)
 
 
-
-
 with open ("corpus.json","w") as f:
     json.dump(corpus, f, indent=2)
-
-
 
 with open ("Merge_history.json","w") as f:
     json.dump(Merge_history, f, indent=2)
 
 with open ("Vocab.json","w") as f:
     json.dump(Vocab, f, indent=2)
-
-
